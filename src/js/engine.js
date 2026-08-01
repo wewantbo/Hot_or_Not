@@ -235,7 +235,19 @@
       allocationRows: allocationRows,
     });
 
-    const projectedGain = total * clamp(returnGap, 0, 0.06);
+    // Estimate annual upside from return-positive fixes (cash, fees, equity raise)
+    const actionableLiftRate = recommendations.reduce(function (sum, rec) {
+      if (/cash|fee|equity exposure|surplus bonds/i.test(rec.title)) {
+        const match = String(rec.impact).match(/([0-9.]+)%/);
+        if (match) return sum + Number(match[1]) / 100;
+        if (rec.actionAmount && /fee/i.test(rec.title)) {
+          return sum + rec.actionAmount / total;
+        }
+      }
+      return sum;
+    }, 0);
+    const projectedGain =
+      total * clamp(Math.max(returnGap, actionableLiftRate), 0, 0.08);
 
     return {
       empty: false,

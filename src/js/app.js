@@ -122,13 +122,15 @@
       ) +
       metric("Model target return", engine.pct(result.metrics.targetReturn, 1)) +
       metric(
-        "Return gap to close",
-        engine.pct(Math.max(0, result.metrics.returnGap), 1),
-        result.metrics.returnGap > 0.005
+        result.metrics.returnGap >= 0
+          ? "Return gap to close"
+          : "Above model return",
+        engine.pct(Math.abs(result.metrics.returnGap), 1),
+        result.metrics.returnGap < -0.005
       ) +
       metric("Fee drag", engine.pct(result.metrics.feeDrag, 2)) +
       metric(
-        "Est. annual lift if aligned",
+        "Est. annual upside from fixes",
         engine.money(lift),
         lift > 0
       ) +
