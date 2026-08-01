@@ -1,95 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Hot Or Not</title>
-
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    .column {
-        float: left;
-        width: 33.33%;
-        padding: 5px;
-    }
-
-    /* Clearfix (clear floats) */
-    .row::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-    </style>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meridian — Portfolio return advisor</title>
+    <meta
+      name="description"
+      content="Meridian reviews your current investments and recommends moves to improve expected return."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Sora:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/advisor.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="container" style="width: 650px;">
-      <div class="row">
-        <div class="col-lg-12">
-          <h1 class="text-center">Hot OR Not</h1>
-          <hr/>
-          <div class="row">
-            <div class="column">
-              <img src="images/Trump.jpeg" alt="Trump" style="width:100%">
-            </div>
-            <div class="column">
-              <img src="images/Joe-Lubin.jpeg" alt="Joe" style="width:100%">
-            </div>
-            <div class="column">
-              <img src="images/Kim-Ong-Un.jpeg" alt="Kim" style="width:100%">
-            </div>
-          </div>
-          <br/>
-          <div id="loader">
-            <p class="text-center">Sign into MetaMask and refresh browser to continue...</p>
-          </div>
-          <div id="content" style="display: none;">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Votes</th>
-                </tr>
-              </thead>
-              <tbody id="candidatesResults">
-              </tbody>
-            </table>
-            <hr/>
-            <form onSubmit="App.castVote(); return false;">
-              <div class="form-group">
-                <label for="candidatesSelect">Pick your Hottie</label>
-                <select class="form-control" id="candidatesSelect">
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary">Pick</button>
-              <hr />
-            </form>
-            <p id="accountAddress" class="text-center"></p>
-          </div>
+    <nav class="site-nav" aria-label="Primary">
+      <a class="brand-mark" href="#top">Meridian</a>
+      <a class="nav-cta" href="#advisor">Open advisor</a>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-content">
+        <h1 class="hero-brand">Meridian</h1>
+        <p class="hero-line">
+          See where your portfolio stands—and the precise moves that can lift expected return.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#advisor">Review my portfolio</a>
+          <button class="btn btn-ghost" type="button" id="loadDemoHero">Try a sample portfolio</button>
         </div>
       </div>
-    </div>
+    </header>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/web3.min.js"></script>
-    <script src="js/truffle-contract.js"></script>
+    <main>
+      <section class="section" id="advisor" aria-labelledby="advisor-title">
+        <div class="section-head">
+          <h2 id="advisor-title">Tune the mix. Raise the return.</h2>
+          <p>
+            Enter what you hold today, choose a risk stance, and Meridian maps gaps against a
+            model allocation—with ranked recommendations you can act on.
+          </p>
+        </div>
+
+        <div class="workspace">
+          <div class="panel">
+            <h3>Your holdings</h3>
+            <div class="profile-row">
+              <label class="field">
+                Risk stance
+                <select id="riskProfile" aria-describedby="riskHelp">
+                  <option value="conservative">Conservative — preserve &amp; steady</option>
+                  <option value="moderate" selected>Moderate — balanced growth</option>
+                  <option value="growth">Growth — maximize long-run return</option>
+                </select>
+              </label>
+              <label class="field">
+                Time horizon
+                <select id="horizon">
+                  <option value="short">Under 5 years</option>
+                  <option value="medium" selected>5–15 years</option>
+                  <option value="long">15+ years</option>
+                </select>
+              </label>
+            </div>
+            <p id="riskHelp" class="results-empty" style="padding: 0 0 1rem; text-align: left; font-size: 0.85rem">
+              Meridian weights recommendations toward your stance. Longer horizons favor equity
+              for higher expected return.
+            </p>
+
+            <div style="overflow-x: auto">
+              <table class="holdings-table" aria-label="Investment holdings">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Asset class</th>
+                    <th>Amount (USD)</th>
+                    <th>Fee %</th>
+                    <th><span class="visually-hidden">Remove</span></th>
+                  </tr>
+                </thead>
+                <tbody id="holdingsBody"></tbody>
+              </table>
+            </div>
+
+            <div class="toolbar">
+              <button class="btn btn-quiet" type="button" id="addHolding">Add holding</button>
+              <button class="btn btn-quiet" type="button" id="loadDemo">Load sample</button>
+              <button class="btn btn-secondary" type="button" id="analyzeBtn">Get recommendations</button>
+            </div>
+          </div>
+
+          <div class="panel" id="resultsPanel" aria-live="polite">
+            <h3>Advisor readout</h3>
+            <div id="resultsEmpty" class="results-empty">
+              Add holdings and run the advisor to see allocation scores and return-lifting moves.
+            </div>
+            <div id="resultsBody" hidden>
+              <div class="score-strip" id="scoreStrip"></div>
+              <div class="metrics" id="metricsList"></div>
+              <h3>Allocation vs target</h3>
+              <div class="alloc-list" id="allocList"></div>
+              <h3>Recommendations to improve return</h3>
+              <div class="recs" id="recsList"></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="disclaimer">
+          Educational illustration only. Meridian uses simplified expected-return and risk
+          assumptions; it is not tax, legal, or personalized investment advice. Past performance
+          does not guarantee future results. Consider a licensed advisor before making decisions.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Meridian portfolio advisor</span>
+      <span>Built for clearer allocation decisions</span>
+    </footer>
+
+    <style>
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+    </style>
+    <script src="js/engine.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

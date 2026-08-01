@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#163c48"/>
+      <stop offset="45%" stop-color="#1a4d42"/>
+      <stop offset="100%" stop-color="#0e2a28"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0.2" y1="0.1" x2="0.8" y2="0.9">
+      <stop offset="0%" stop-color="#c4a35a" stop-opacity="0.35"/>
+      <stop offset="55%" stop-color="#2f8f78" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0e332b" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c4a35a" stop-opacity="0"/>
+      <stop offset="35%" stop-color="#d4b56a" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#f4f8f6" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <circle cx="1180" cy="220" r="220" fill="url(#glow)" filter="url(#soft)"/>
+  <circle cx="320" cy="680" r="280" fill="#2f8f78" opacity="0.12" filter="url(#soft)"/>
+  <!-- Horizon meridian -->
+  <path d="M0 620 C280 560, 520 700, 780 640 S1200 520, 1600 580 L1600 1000 L0 1000 Z" fill="#0b2422" opacity="0.55"/>
+  <path d="M0 640 C300 590, 540 720, 820 655 S1220 540, 1600 600" fill="none" stroke="url(#line)" stroke-width="3"/>
+  <!-- Abstract growth path -->
+  <path d="M120 780 C280 760, 340 690, 460 650 S680 620, 760 540 S980 360, 1120 320 S1380 250, 1500 180" fill="none" stroke="#c4a35a" stroke-opacity="0.75" stroke-width="2.5"/>
+  <path d="M120 780 C280 760, 340 690, 460 650 S680 620, 760 540 S980 360, 1120 320 S1380 250, 1500 180 L1500 900 L120 900 Z" fill="#c4a35a" opacity="0.08"/>
+  <!-- Grid ticks suggesting a chart -->
+  <g stroke="#f4f8f6" stroke-opacity="0.08" stroke-width="1">
+    <path d="M200 200 V820"/>
+    <path d="M400 200 V820"/>
+    <path d="M600 200 V820"/>
+    <path d="M800 200 V820"/>
+    <path d="M1000 200 V820"/>
+    <path d="M1200 200 V820"/>
+    <path d="M1400 200 V820"/>
+    <path d="M120 300 H1500"/>
+    <path d="M120 450 H1500"/>
+    <path d="M120 600 H1500"/>
+    <path d="M120 750 H1500"/>
+  </g>
+  <circle cx="1500" cy="180" r="8" fill="#d4b56a"/>
+  <circle cx="1500" cy="180" r="18" fill="#d4b56a" opacity="0.25"/>
+</svg>
